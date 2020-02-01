@@ -1,0 +1,6 @@
+**/.bdep
+**/bootstrap
+*.exe
+*.pdb
+*.dll
+*.exe.dlls

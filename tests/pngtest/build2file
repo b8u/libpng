@@ -1,0 +1,12 @@
+import libs += libpng%lib{png} libz%lib{z}
+
+exe{pngtest}: {c}{pngtest} $libs testscript
+
+#obj{*}: c.poptions =+ -DPNG_FREESTANDING_TESTS
+
+# Disable MSVC warnings that pop up with /W3 and Clang/MSVC warnings.
+#
+if ($c.class == 'msvc')
+  c.coptions += /wd4267 /wd4996
+elif ($c.id == 'clang' && $c.target.system == 'win32-msvc')
+  c.coptions += -Wno-deprecated-declarations

@@ -1,0 +1,7 @@
+$* --strict default=discard $src_base/pngtest.png
+$* --strict default=discard IDAT=save $src_base/pngtest.png
+$* --strict default=if-safe $src_base/pngtest.png
+$* --strict bKGD=save cHRM=save gAMA=save all=discard iCCP=save sBIT=save sRGB=save eXIf=save $src_base/pngtest.png
+$* --strict default=save $src_base/pngtest.png
+$* --strict sTER=if-safe $src_base/pngtest.png
+$* --strict vpAg=if-safe $src_base/pngtest.png

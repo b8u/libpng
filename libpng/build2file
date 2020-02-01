@@ -1,0 +1,90 @@
+int_libs = # Interface dependencies.
+imp_libs = # Implementation dependencies.
+import imp_libs += libz%lib{z}
+
+lib{png}: c{png}        \
+          c{pngerror}   \
+          c{pngget}     \
+          c{pngmem}     \
+          c{pngpread}   \
+          c{pngread}    \
+          c{pngrio}     \
+          c{pngrtran}   \
+          c{pngrutil}   \
+          c{pngset}     \
+          c{pngtrans}   \
+          c{pngwio}     \
+          c{pngwrite}   \
+          c{pngwtran}   \
+          c{pngwutil}   \
+          h{png}        \
+          h{pnglibconf} \
+          $imp_libs $int_libs
+
+switch $cxx.target.class, $c.target.system
+{
+  case 'windows', 'win32-msvc'
+  {
+    c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+    objs{*}: c.poptions =+ -DPNG_BUILD_DLL
+  }
+}
+
+
+# Note that we add "-I$src_base" for the headers auto-generating machinery to
+# work properly.
+#
+#c.poptions =+ "-I$out_base" "-I$src_base" 
+
+# Optimizations
+intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   ) 
+arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
+mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
+powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
+
+# SSE optimizations
+if $intel_sse_opt
+{
+  c.poptions =+ -DPNG_INTEL_SSE_OPT=1
+  lib{png}: c{intel/intel_init} c{intel/filter_sse2_intrinsics}
+}
+else
+  c.poptions =+ -DPNG_INTEL_SSE_OPT=0
+
+# ARM optimizations
+if $arm_neon_opt
+{
+  c.poptions =+ -DPNG_ARM_NEON_OPT=2
+  lib{png}: c{arm/arm_init} c{arm/filter_neon.S} c{arm/filter_neon_intrinsics} c{arm/palette_neon_intrinsics}
+}
+else
+  c.poptions =+ -DPNG_ARM_NEON_OPT=0
+
+# MISP optimizations
+if $mips_msa_opt
+{
+  c.poptions =+ -DPNG_MIPS_MSA_OPT=2
+  lib{png}: c{mips/mips_init} c{mips/filter_msa_intrinsics}
+}
+else
+  c.poptions =+ -DPNG_MIPS_MSA_OPT=0
+
+# PowerPC optimizations
+if $powerpc_vsx_opt
+{
+  c.poptions =+ -DPNG_POWERPC_VSX_OPT=2
+  lib{png}: c{powerpc/powerpc_init} c{powerpc/filter_vsx_intrinsics}
+}
+else
+  c.poptions =+ -DPNG_POWERPC_VSX_OPT=0
+
+
+# Export options.
+#
+lib{png}:
+{
+	cc.export.poptions = "-I$out_base" "-I$src_base"
+	cc.export.libs = $int_libs
+}
+
+./: lib{png} 

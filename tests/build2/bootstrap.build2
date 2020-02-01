@@ -1,0 +1,9 @@
+# file      : tests/build/bootstrap.build
+# copyright : Copyright (c) 2016-2019 Code Synthesis Ltd
+# license   : zlib License; see accompanying LICENSE file
+
+project = # Unnamed subproject.
+
+using config
+using dist
+using test
