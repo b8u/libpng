@@ -1,4 +1,4 @@
-./: {*/ -build2/} manifest
+./: {*/ -build2/} doc{LICENSE README} manifest
 
 # Don't install tests.
 #

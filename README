@@ -1,0 +1,15 @@
+libpng is the official PNG reference library. It supports almost all PNG
+features, is extensible, and has been extensively tested for over 23 years. The
+home site for development versions (i.e., may be buggy or subject to change or
+include experimental features) is https://libpng.sourceforge.io/, and the place
+to go for questions about the library is the png-mng-implement mailing list.
+
+libpng is available as ANSI C (C89) source code and requires zlib 1.0.4 or later
+(1.2.5 or later recommended for performance and security reasons). The current
+public release, libpng 1.6.37, fixes the use-after-free security vulnerability
+noted below, as well as an ARM NEON memory leak in the palette-to-RGB(A)
+expansion code (png_do_expand_palette()). 
+
+The packaging of libpng for build2 is tracked in a Git repository at:
+
+https://github.com/b8u/libpng
