@@ -1,9 +1,3 @@
-# file      : tests/minigzip/testscript
-# copyright : Copyright (c) 2016-2019 Code Synthesis Ltd
-# license   : zlib License; see accompanying LICENSE file
-
-: max-compression
-:
 {
   $* "$src_base/pngsuite/basn0g01.png" >>~/EOO/
   /PASS:.+/

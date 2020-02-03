@@ -5,8 +5,4 @@ using c
 h{*}: extension = h
 c{*}: extension = c
 
-# Every exe{} in this subproject is by default a test.
-#
-exe{*}: test = true
-
 
