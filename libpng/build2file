@@ -3,22 +3,26 @@ imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
 lib{png}: c{png}        \
+          h{png}        \
+          h{pngconf}    \
           c{pngerror}   \
           c{pngget}     \
+          h{pnginfo}    \
+          h{pnglibconf} \
           c{pngmem}     \
           c{pngpread}   \
+          h{pngpriv}    \
           c{pngread}    \
           c{pngrio}     \
           c{pngrtran}   \
           c{pngrutil}   \
           c{pngset}     \
+          h{pngstruct}  \
           c{pngtrans}   \
           c{pngwio}     \
           c{pngwrite}   \
           c{pngwtran}   \
           c{pngwutil}   \
-          h{png}        \
-          h{pnglibconf} \
           $imp_libs $int_libs
 
 switch $cxx.target.class, $c.target.system
