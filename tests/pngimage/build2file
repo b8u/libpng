@@ -1,6 +1,6 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-exe{pngimage}: {c}{pngimage} $libs testscript
+exe{pngimage}: {h c}{*} $libs testscript
 exe{pngimage}: test.options = --exhaustive --list-combos --log
 
 obj{*}: c.poptions =+ -DPNG_FREESTANDING_TESTS

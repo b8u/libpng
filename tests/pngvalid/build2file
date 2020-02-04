@@ -1,6 +1,6 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-exe{pngvalid}: {c}{pngvalid} $libs testscript
+exe{pngvalid}: {h c}{*} $libs testscript
 
 
 # For cexcept.h
