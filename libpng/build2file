@@ -5,6 +5,7 @@ import imp_libs += libz%lib{z}
 lib{png}: c{png}        \
           h{png}        \
           h{pngconf}    \
+          h{pngdebug}   \
           c{pngerror}   \
           c{pngget}     \
           h{pnginfo}    \
