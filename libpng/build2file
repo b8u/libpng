@@ -33,6 +33,10 @@ switch $cxx.target.class, $c.target.system
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
     objs{*}: c.poptions =+ -DPNG_BUILD_DLL
   }
+  default
+  {
+    $imp_libs =+ libm%lib{m}
+  }
 }
 
 
