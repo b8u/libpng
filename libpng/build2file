@@ -2,6 +2,20 @@ int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
+switch $cxx.target.class, $c.target.system
+{
+  case 'windows', 'win32-msvc'
+  {
+    c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+    objs{*}: c.poptions =+ -DPNG_BUILD_DLL
+  }
+  default
+  {
+    import imp_libs =+ libm%lib{m}
+  }
+}
+
+
 lib{png}: c{png}        \
           h{png}        \
           h{pngconf}    \
@@ -26,30 +40,18 @@ lib{png}: c{png}        \
           c{pngwutil}   \
           $imp_libs $int_libs
 
-switch $cxx.target.class, $c.target.system
-{
-  case 'windows', 'win32-msvc'
-  {
-    c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
-    objs{*}: c.poptions =+ -DPNG_BUILD_DLL
-  }
-  default
-  {
-    import $imp_libs =+ libm%lib{m}
-  }
-}
-
 
 # Note that we add "-I$src_base" for the headers auto-generating machinery to
 # work properly.
 #
-#c.poptions =+ "-I$out_base" "-I$src_base" 
+#c.poptions =+ "-I$out_base" "-I$src_base"
 
 # Optimizations
-intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   ) 
-arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
-mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
-powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
+ intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   )
+ arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
+ mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
+ powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
+
 
 # SSE optimizations
 if $intel_sse_opt
@@ -96,4 +98,4 @@ lib{png}:
 	cc.export.libs = $int_libs
 }
 
-./: lib{png} 
+./: lib{png}

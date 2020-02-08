@@ -4,3 +4,8 @@
 *.pdb
 *.dll
 *.exe.dlls
+
+tests/pngimage/pngimage
+tests/pngtest/pngtest
+tests/pngunknown/pngunknown
+tests/pngvalid/pngvalid
