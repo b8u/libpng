@@ -1,12 +1,24 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-if ($c.target.system != 'win32-msvc' && $c.target.system != 'darwin')
+switch $cxx.target.class, $c.target.system
 {
-  import libs =+ libm%lib{m}
+  case 'windows', 'win32-msvc'
+  {
+    c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+  }
+  case 'darwin'
+  {
+    # do nothing, it's in the core lib
+    c.poptions += -Wno-cpp
+  }
+  default
+  {
+    c.poptions += -Wno-cpp
+    import libs =+ libm%lib{m}
+  }
 }
 
 exe{pngvalid}: {h c}{*} $libs testscript
-
 
 # For cexcept.h
 c.poptions =+ "-I$src_base" 
