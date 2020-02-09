@@ -1,15 +1,14 @@
-$* --strict --gamma-16-to-8 1>-
-$* --strict --gamma-alpha-mode 1>-
-$* --strict --gamma-background 1>-
-$* --strict --gamma-alpha-mode --expand16 1>-
-$* --strict --gamma-background --expand16 1>-
-$* --strict --gamma-transform --expand16 1>-
-$* --strict --gamma-sbit 1>-
-$* --strict --gamma-threshold 1>-
-$* --strict --gamma-transform 1>-
-$* --strict --standard --progressive-read --interlace 1>-
-$* --strict --size --progressive-read 1>-
-$* --strict --standard --progressive-read 1>-
-$* --strict --standard 1>-
-$* --strict --transform 1>-
-
+$* --gamma-16-to-8 2>- 1>-
+$* --gamma-alpha-mode 2>- 1>-
+$* --gamma-background 2>- 1>-
+$* --gamma-alpha-mode --expand16 2>- 1>-
+$* --gamma-background --expand16 2>- 1>-
+$* --gamma-transform --expand16 2>- 1>-
+$* --gamma-sbit 2>- 1>-
+$* --gamma-threshold 2>- 1>-
+$* --gamma-transform 2>- 1>-
+$* --standard --progressive-read --interlace 2>- 1>-
+$* --size --progressive-read 2>- 1>-
+$* --standard --progressive-read 2>- 1>-
+$* --standard 2>- 1>-
+$* --transform 2>- 1>-
