@@ -9,6 +9,10 @@ switch $c.target.class, $c.target.system
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
     objs{*}: c.poptions =+ -DPNG_BUILD_DLL
   }
+  case 'windows', 'clang'
+  {
+    c.poptions += -Wno-tautological-constant-out-of-range-compare
+  }
   case 'macos'
   {
     # libm is in the core lib
@@ -51,10 +55,10 @@ lib{png}: c{png}        \
 #c.poptions =+ "-I$out_base" "-I$src_base"
 
 # Optimizations
- intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   )
- arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
- mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
- powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
+intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   )
+arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
+mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
+powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
 
 
 # SSE optimizations
@@ -103,3 +107,11 @@ lib{png}:
 }
 
 ./: lib{png}
+
+# Install the bare minimum of headers (note: not recreating subdirectories).
+#
+h{*}: install = false
+
+h{png}@./: install = include/
+h{pngconf}@./: install = include/
+h{pnglibconf}@./: install = include/
