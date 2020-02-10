@@ -2,16 +2,16 @@ int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
-switch $cxx.target.class, $c.target.system
+switch $c.target.class, $c.target.system
 {
   case 'windows', 'win32-msvc'
   {
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
     objs{*}: c.poptions =+ -DPNG_BUILD_DLL
   }
-  case 'darwin'
+  case 'macos'
   {
-    # do nothing, it's in the core lib
+    # libm is in the core lib
   }
   default
   {

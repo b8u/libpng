@@ -1,14 +1,14 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-switch $cxx.target.class, $c.target.system
+switch $c.target.class, $c.target.system
 {
   case 'windows', 'win32-msvc'
   {
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
   }
-  case 'darwin'
+  case 'macos'
   {
-    # do nothing, it's in the core lib
+    # libm is in the core lib
     c.poptions += -Wno-cpp
   }
   default
