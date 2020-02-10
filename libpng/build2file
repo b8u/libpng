@@ -2,7 +2,7 @@ int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
-switch $c.target.class, $c.target.system
+switch $cc.target.class, $cc.target.system
 {
   case 'windows', 'win32-msvc'
   {
@@ -55,10 +55,10 @@ lib{png}: c{png}        \
 #c.poptions =+ "-I$out_base" "-I$src_base"
 
 # Optimizations
-intel_sse_opt   = ( $regex.match($cxx.target.cpu, 'i[3-6]86')   || $regex.match($cxx.target.cpu, 'x86_64.*')   )
-arm_neon_opt    = ( $cxx.target.cpu == 'arm'                    || $cxx.target.cpu == 'aarch64'                )
-mips_msa_opt    = ( $regex.match($cxx.target.cpu, 'mipsel.*')   || $regex.match($cxx.target.cpu, 'mips64el.*') )
-powerpc_vsx_opt = ( $regex.match($cxx.target.cpu, '^powerpc.*') || $regex.match($cxx.target.cpu, '^ppc64.*')   )
+intel_sse_opt   = ( $regex.match($cc.target.cpu, 'i[3-6]86')   || $regex.match($cc.target.cpu, 'x86_64.*')   )
+arm_neon_opt    = ( $cc.target.cpu == 'arm'                    || $cc.target.cpu == 'aarch64'                )
+mips_msa_opt    = ( $regex.match($cc.target.cpu, 'mipsel.*')   || $regex.match($cc.target.cpu, 'mips64el.*') )
+powerpc_vsx_opt = ( $regex.match($cc.target.cpu, '^powerpc.*') || $regex.match($cc.target.cpu, '^ppc64.*')   )
 
 
 # SSE optimizations

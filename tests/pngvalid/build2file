@@ -1,6 +1,6 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-switch $c.target.class, $c.target.system
+switch $cc.target.class, $cc.target.system
 {
   case 'windows', 'win32-msvc'
   {
