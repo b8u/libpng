@@ -23,6 +23,11 @@ switch $cc.target.class, $cc.target.system
   }
 }
 
+if ($c.class == 'gcc')
+{
+  c.coptions += -Wno-all -Wno-extra
+}
+
 
 lib{png}: c{png}        \
           h{png}        \
