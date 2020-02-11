@@ -1,13 +1,10 @@
 import libs += libpng%lib{png} libz%lib{z}
 
-switch $cc.target.class, $cc.id
+switch $cc.target.class, $cc.target.system
 {
-  case 'windows', 'msvc'
+  case 'windows', 'win32-msvc'
   {
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
-  }
-  case 'windows', 'clang'
-  {
   }
   case 'macos'
   {

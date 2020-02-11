@@ -2,9 +2,9 @@ int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
-switch $cc.target.class, $cc.id
+switch $cc.target.class, $cc.target.system
 {
-  case 'windows', 'msvc'
+  case 'windows', 'win32-msvc'
   {
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
     objs{*}: c.poptions =+ -DPNG_BUILD_DLL
