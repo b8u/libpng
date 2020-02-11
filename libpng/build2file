@@ -2,16 +2,12 @@ int_libs = # Interface dependencies.
 imp_libs = # Implementation dependencies.
 import imp_libs += libz%lib{z}
 
-switch $cc.target.class, $cc.target.system
+switch $c.target.class, $c.target.system
 {
   case 'windows', 'win32-msvc'
   {
     c.poptions += -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
     objs{*}: c.poptions =+ -DPNG_BUILD_DLL
-  }
-  case 'windows', 'clang'
-  {
-    c.poptions += -Wno-tautological-constant-out-of-range-compare
   }
   case 'macos'
   {
@@ -21,6 +17,11 @@ switch $cc.target.class, $cc.target.system
   {
     import imp_libs =+ libm%lib{m}
   }
+}
+
+if ($c.id == 'clang' && $c.target.class == 'windows')
+{
+  c.coptions += -Wno-tautological-constant-out-of-range-compare
 }
 
 if ($c.class == 'gcc')
