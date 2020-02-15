@@ -1,6 +1,6 @@
 : 1
 name: libpng
-version: 1.6.37-a.0.z
+version: 1.6.37-a.1
 project: libpng
 summary: libpng C library
 license: PNG Reference Library License version 2
