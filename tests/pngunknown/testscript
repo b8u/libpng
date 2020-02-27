@@ -1,7 +1,20 @@
+: pngunknown-discard
 $* --strict default=discard $src_base/pngtest.png
+
+: pngunknown-IDAT
 $* --strict default=discard IDAT=save $src_base/pngtest.png
+
+: pngunknown-if-safe
 $* --strict default=if-safe $src_base/pngtest.png
+
+: pngunknown-sAPI
 $* --strict bKGD=save cHRM=save gAMA=save all=discard iCCP=save sBIT=save sRGB=save eXIf=save $src_base/pngtest.png
+
+: pngunknown-save
 $* --strict default=save $src_base/pngtest.png
+
+: pngunknown-sTER
 $* --strict sTER=if-safe $src_base/pngtest.png
+
+: pngunknown-vpAg
 $* --strict vpAg=if-safe $src_base/pngtest.png
