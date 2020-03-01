@@ -1,6 +1,13 @@
 import libs += libpng%lib{png} libz%lib{z}
 
+if ($c.class == 'gcc')
+{
+  c.coptions += -Wno-maybe-uninitialized
+}
+
+
 exe{pngimage}: {h c}{*} $libs testscript file{**.png}
 exe{pngimage}: test.options = --exhaustive --list-combos --log
 
 obj{*}: c.poptions =+ -DPNG_FREESTANDING_TESTS
+
