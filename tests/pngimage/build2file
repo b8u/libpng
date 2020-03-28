@@ -6,8 +6,22 @@ if ($c.id == 'gcc')
 }
 
 
-exe{pngimage}: {h c}{*} $libs testscript file{**.png}
+exe{pngimage}: {h c}{*} $libs
 exe{pngimage}: test.options = --exhaustive --list-combos --log
 
 obj{*}: c.poptions =+ -DPNG_FREESTANDING_TESTS
+
+
+for pic: file{pngsuite/*.png}
+{
+	n = $name($pic)
+
+	./: alias{$n}: exe{pngimage} testscript
+
+	alias{$n}:
+	{
+		test = exe{pngimage} --exhaustive --list-combos --log $pic
+		name = $n
+	}
+}
 
